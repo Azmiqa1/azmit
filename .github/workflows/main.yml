@@ -1,4 +1,4 @@
-name: CI/Cd
+name: Node.js CI/CD
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
       - name: Run deployment commands on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
-            cd /azmi
+            cd /path/to/your/project
             git pull origin main
             npm install
             npm run build
