@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Set up server.js
         uses: actions/setup-node@v3
         with:
           node-version: '12.22.9'
@@ -20,6 +20,7 @@ jobs:
       - name: Install dependencies and test
         run: |
           npm install
+          npm test
 
       - name: Deploy to server
         uses: webfactory/ssh-agent@v0.5.3
@@ -28,9 +29,8 @@ jobs:
 
       - name: Run deployment commands on server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
-            cd /azmi
+          ssh -o StrictHostKeyChecking=no root@168.119.238.20 << EOF
+            cd /root/azmi/azmit
             git pull origin main
             npm install
-            npm run build
           EOF
